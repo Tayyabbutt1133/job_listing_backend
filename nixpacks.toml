@@ -1,0 +1,5 @@
+[phases.install]
+cmds = [
+    "pip install --upgrade pip",
+    "pip install --no-cache-dir --default-timeout=100 --retries 5 -r requirements.txt"
+]
