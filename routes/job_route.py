@@ -142,3 +142,5 @@ def delete_job(job_id):
     except Exception as e:
         print(f"Error deleting job: {e}")
         return jsonify({"error": "Failed to delete job"}), 500
+
+

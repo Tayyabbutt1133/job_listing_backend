@@ -12,13 +12,19 @@ def create_app():
     app.config.from_object(Config)
     db.init_app(app)
     app.register_blueprint(job_bp)
+
+    @app.route("/scrape", methods=["GET"])
+    def scrape_jobs():
+        with app.app_context():
+            scrape_actuary_jobs()
+        return {"message": "Scraping completed!"}, 200
+
     return app
 
 
 app = create_app()
 
 with app.app_context():
-    scrape_actuary_jobs()
     db.create_all()
 
 if __name__ == "__main__":
