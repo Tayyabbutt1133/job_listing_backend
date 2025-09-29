@@ -2,6 +2,7 @@ from flask import Blueprint, request, jsonify
 from models.jobs import Job
 from db import db
 from sqlalchemy import func
+from Scraper.scrape import scrape_actuary_jobs
 
 # Mini app/routes for Job listing only
 job_bp = Blueprint("jobs", __name__)
@@ -143,4 +144,8 @@ def delete_job(job_id):
         print(f"Error deleting job: {e}")
         return jsonify({"error": "Failed to delete job"}), 500
 
+@job_bp.route("/scrape", methods=["GET"])
+def scrape_jobs():
+    scrape_actuary_jobs()
+    return {"message": "Scraping completed!"}, 200
 

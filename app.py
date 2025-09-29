@@ -3,29 +3,28 @@ from config import Config
 from db import db
 from routes.job_route import job_bp
 from flask_cors import CORS
-from Scraper.scrape import scrape_actuary_jobs
+from flask_migrate import Migrate
 import os
+
 
 def create_app():
     app = Flask(__name__)
     CORS(app)
     app.config.from_object(Config)
-    db.init_app(app)
-    app.register_blueprint(job_bp)
 
-    @app.route("/scrape", methods=["GET"])
-    def scrape_jobs():
-        with app.app_context():
-            scrape_actuary_jobs()
-        return {"message": "Scraping completed!"}, 200
+    # Initialize database
+    db.init_app(app)
+
+    # Initialize migration engine
+    Migrate(app, db)
+
+    # Register blueprints
+    app.register_blueprint(job_bp)
 
     return app
 
 
 app = create_app()
-
-with app.app_context():
-    db.create_all()
 
 if __name__ == "__main__":
     app.run(

@@ -3,3 +3,4 @@ flask-cors~=6.0.1
 SQLAlchemy~=2.0.43
 selenium~=4.35.0
 python-dotenv~=1.1.1
+Flask-Migrate~=4.1.0
